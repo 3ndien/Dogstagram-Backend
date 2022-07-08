@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+<mat-card>
+  <mat-card-header class="profil-title">
+      {{username}}
+  </mat-card-header>
+  <mat-card-header>
+    <button mat-fab class="profile-picture"></button>
+  </mat-card-header>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="warn" (click)="deactivateUser()">Deactivate Account</button>
+  </mat-card-actions>
+  <mat-divider></mat-divider>
+</mat-card>

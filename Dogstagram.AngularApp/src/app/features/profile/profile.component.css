@@ -1,0 +1,16 @@
+.profile-picture {
+  width: 17rem;
+  height: 17rem;
+  border-radius: 50%;
+  background-image: url(../../../assets/ProfilPic/132935595_112497870655907_6009303211435631047_n.jpg);
+  background-size: 100%;
+  background-position: center center;
+}
+
+.profil-title {
+  position: relative;
+  left: 30%;
+  padding-top: 1rem;
+  font-size: 3rem;
+  font-family: cursive;
+}

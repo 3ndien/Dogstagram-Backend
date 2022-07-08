@@ -1,0 +1,29 @@
+<form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem" class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
+  <img src="../../../assets/logo/download.jfif">
+  <div>
+    <mat-form-field appearance="fill" class="register-full-width">
+      <mat-label>Username</mat-label>
+      <input id="name" type="text" matInput formControlName="username">
+      <mat-error>Please enter a username.</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill" class="register-full-width">
+      <mat-label>Email</mat-label>
+      <input id="email" type="email" matInput formControlName="email">
+      <mat-error>Please enter a valid email.</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill" class="login-full-width">
+      <mat-label>Password</mat-label>
+      <input id="password" type="password" matInput formControlName="password">
+      <mat-error>Please enter a valid password.</mat-error>
+    </mat-form-field>
+  </div>
+  <button [disabled]="registerForm.invalid" class="register-button" type="submit" mat-raised-button color="primary">Register</button>
+  <mat-divider></mat-divider>
+  <mat-divider inset vertical></mat-divider>
+  <p>Have an account, Enter! <button type="button" mat-raised-button routerLink="/login">Login</button></p>
+</form>
+

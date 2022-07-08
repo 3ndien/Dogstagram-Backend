@@ -1,0 +1,25 @@
+form {
+  border: 0.1px solid black;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 0.5rem;
+
+}
+
+img {
+  padding-bottom: 2rem;
+}
+
+.register-form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.register-full-width {
+  width: 100%;
+}

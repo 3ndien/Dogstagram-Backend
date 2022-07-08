@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dogstagram.WebApi", "Dogstagram.WebApi\Dogstagram.WebApi.csproj", "{DE7C9430-8C8A-4B8F-B016-9D2268D90EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dogstagram.WebApi.IntegrationTests", "Dogstagram.WebApi.IntegrationTests\Dogstagram.WebApi.IntegrationTests.csproj", "{1F1BDDBA-AF54-4D91-89AF-09928F11A105}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE7C9430-8C8A-4B8F-B016-9D2268D90EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7C9430-8C8A-4B8F-B016-9D2268D90EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7C9430-8C8A-4B8F-B016-9D2268D90EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7C9430-8C8A-4B8F-B016-9D2268D90EED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1BDDBA-AF54-4D91-89AF-09928F11A105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1BDDBA-AF54-4D91-89AF-09928F11A105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1BDDBA-AF54-4D91-89AF-09928F11A105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1BDDBA-AF54-4D91-89AF-09928F11A105}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD4DE7E3-3E37-4651-A357-4E55A000F68C}
+	EndGlobalSection
+EndGlobal
