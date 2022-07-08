@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dogstagram.WebApi.Migrations
 {
     [DbContext(typeof(DogstagramDbContext))]
-    [Migration("20220707170128_Initial")]
+    [Migration("20220708222929_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
