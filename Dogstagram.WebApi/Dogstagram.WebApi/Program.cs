@@ -12,6 +12,7 @@ namespace Dogstagram.WebApi
                 .AddDatabaseService(builder.Configuration)
             .AddIdentityService()
             .AddSwaggerGen()
+            .AddCors()
             .AddJwtAuthentication(builder.Services.GetApplicationSettings(builder.Configuration))
             .AddApplicationServices()
             .AddAutoMapper(typeof(Program))
