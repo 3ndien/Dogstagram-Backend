@@ -6,11 +6,20 @@ import { FeaturesRoutingModule } from './features-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { CreatePostService } from './services/create-post.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptorService } from '../core/interceptorServices/jwt-interceptor.service';
 
 @NgModule({
   declarations: [NavbarComponent, ProfileComponent, CreatePostComponent],
   imports: [CommonModule, MaterialModule, FeaturesRoutingModule],
-  providers: [CreatePostService],
+  providers: [
+    CreatePostService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true,
+    },
+  ],
   exports: [NavbarComponent],
 })
 export class FeaturesModule {}

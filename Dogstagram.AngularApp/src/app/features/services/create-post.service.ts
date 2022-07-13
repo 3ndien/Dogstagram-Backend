@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,9 @@ export class CreatePostService {
   constructor(private http: HttpClient) {}
 
   post(data: any): Observable<any> {
-    return this.http.post(this.creatPostPath, data);
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'multipart/form-data');
+
+    return this.http.post(this.creatPostPath, data, { headers });
   }
 }

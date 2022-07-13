@@ -1,6 +1,7 @@
 ﻿namespace Dogstagram.WebApi.Features.Identity
 {
     using AutoMapper;
+    using Azure.Storage.Blobs;
     using Dogstagram.WebApi.Controllers;
     using Dogstagram.WebApi.Data.Models;
     using Dogstagram.WebApi.Features.Identity.Models;
@@ -16,6 +17,7 @@
         private readonly UserManager<User> userManager;
         private readonly RoleManager<UserRole> roleManager;
         private readonly IIdentityService identityService;
+        private readonly BlobServiceClient blob;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
@@ -23,12 +25,14 @@
             UserManager<User> userManager,
             RoleManager<UserRole> roleManager,
             IIdentityService identityService,
-            IOptions<ApplicationSettings> applicationSettings)
+            IOptions<ApplicationSettings> applicationSettings,
+            BlobServiceClient blob)
         {
             this.mapper = mapper;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.identityService = identityService;
+            this.blob = blob;
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -42,6 +46,7 @@
 
             if (result.Succeeded)
             {
+                await blob.CreateBlobContainerAsync($"{user.UserName}-container");
                 return this.StatusCode((int)HttpStatusCode.Created);
             }
 

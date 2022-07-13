@@ -1,11 +1,14 @@
 ﻿namespace Dogstagram.WebApi.Infrastructures.Extensions
 {
+    using Azure.Storage.Blobs;
     using Dogstagram.WebApi.Data;
     using Dogstagram.WebApi.Data.Models;
     using Dogstagram.WebApi.Features.Follow;
     using Dogstagram.WebApi.Features.Identity;
+    using Dogstagram.WebApi.Features.Post;
     using Dogstagram.WebApi.Features.Profile;
     using Dogstagram.WebApi.Features.Search;
+    using Dogstagram.WebApi.Infrastructures.Filters;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
@@ -18,6 +21,13 @@
             var appSettingsSections = configuration.GetSection("ApplicationSettings");
             services.Configure<ApplicationSettings>(appSettingsSections);
             return appSettingsSections.Get<ApplicationSettings>();
+        }
+
+        public static StorageConnectionString GetStorageConnectionString(this IServiceCollection services, IConfiguration configuration)
+        {
+            var storageConnectionSection = configuration.GetSection("StorageConnectionString");
+            services.Configure<StorageConnectionString>(storageConnectionSection);
+            return storageConnectionSection.Get<StorageConnectionString>();
         }
 
         public static IServiceCollection AddDatabaseService(this IServiceCollection services, IConfiguration configuration)
@@ -65,14 +75,20 @@
             return services;
         }
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, StorageConnectionString storageConnectionString)
         {
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<IFollowService, FollowService>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddSingleton(s => 
+                    new BlobServiceClient(storageConnectionString.BlobStorageConnectionString));
             return services;
         }
+
+        public static void AddApiControllers(this IServiceCollection services)
+            => services.AddControllers(options => options.Filters.Add<ModelOrNotFoundActionFilter>());
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen();
