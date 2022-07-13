@@ -23,7 +23,12 @@
         public async Task<ActionResult> Follow(string userId)
         {
             var currentUserId = this.userManager.FindByNameAsync(this.User?.Identity?.Name).Result.Id;
-            return await this.followService.Follow(currentUserId, userId) ? this.Ok() : this.BadRequest();
+            var result = await this.followService.Follow(currentUserId, userId);
+            if (result.Failure)
+            {
+                return this.BadRequest(new CommonResponseModel { Message = result.Error});
+            }
+            return this.Ok();
         }
 
         [HttpPost]
@@ -32,8 +37,14 @@
         public async Task<ActionResult> Unfollow(string userId)
         {
             var currentUserId = this.userManager.FindByNameAsync(this.User?.Identity?.Name).Result.Id;
-            return await this.followService.Unfollow(currentUserId, userId) ? this.Ok() : this.BadRequest();
+            var result = await this.followService.Unfollow(currentUserId, userId);
 
+            if (result.Failure)
+            {
+                return this.BadRequest();
+            }
+
+            return this.Ok();
         }
     }
 }

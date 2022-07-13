@@ -5,6 +5,7 @@
     using Dogstagram.WebApi.Data.Models.Base;
     using Dogstagram.WebApi.Features.Follow;
     using Dogstagram.WebApi.Features.Profile.Models;
+    using Dogstagram.WebApi.Infrastructures.Services;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
@@ -21,13 +22,13 @@
             this.followService = followService;
         }
 
-        public async Task<bool> DeleteUser(string userName)
+        public async Task<Result> DeleteUser(string userName)
         {
             var user = await this.userManager.Users.FirstOrDefaultAsync(x => x.UserName == userName);
 
             if (user == null)
             {
-                return false;
+                return $"User name {userName} not found!";
             }
 
             this.dbContext.Users.Remove(user);

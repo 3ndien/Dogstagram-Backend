@@ -4,8 +4,6 @@ namespace Dogstagram.WebApi.Features.Post
     using Azure.Storage.Blobs;
     using Dogstagram.WebApi.Features.Post.Models;
     using Dogstagram.WebApi.Infrastructures.Services;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Net;
 
     public class PostService : IPostService
     {

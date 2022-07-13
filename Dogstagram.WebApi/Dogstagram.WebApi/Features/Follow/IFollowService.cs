@@ -1,10 +1,12 @@
 ﻿namespace Dogstagram.WebApi.Features.Follow
 {
+    using Dogstagram.WebApi.Infrastructures.Services;
+
     public interface IFollowService
     {
-        Task<bool> Follow(string userId, string followerId);
+        Task<Result> Follow(string userId, string followerId);
 
-        Task<bool> Unfollow(string userId, string followerId);
+        Task<Result> Unfollow(string userId, string followerId);
 
         Task<int> FollowerCount(string userId);
 

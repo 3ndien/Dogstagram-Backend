@@ -1,6 +1,7 @@
 ﻿namespace Dogstagram.WebApi.Features.Follow
 {
     using Dogstagram.WebApi.Data;
+    using Dogstagram.WebApi.Infrastructures.Services;
     using Microsoft.EntityFrameworkCore;
 
     public class FollowService : IFollowService
@@ -12,7 +13,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> Follow(string userId, string followerId)
+        public async Task<Result> Follow(string userId, string followerId)
         {
             var alreadyFollowed = await this
                 .dbContext
@@ -21,7 +22,7 @@
 
             if (alreadyFollowed)
             {
-                return false;
+                return "User is already followed!";
             }
 
             await this.dbContext
@@ -38,7 +39,7 @@
         public async Task<int> FollowerCount(string userId)
            => await this.dbContext.Follows!.Where(u => u.UserId == userId).CountAsync();
 
-        public async Task<bool> Unfollow(string userId, string followerId)
+        public async Task<Result> Unfollow(string userId, string followerId)
         {
             var userAlreadyFollowed = 
                   await this.dbContext

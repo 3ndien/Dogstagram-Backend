@@ -32,11 +32,11 @@
         public async Task<ActionResult<CommonResponseModel>> Delete()
         {
             var userName = this.ControllerContext?.HttpContext?.User?.Identity?.Name;
-            var success = await this.profileService.DeleteUser(userName!);
+            var result = await this.profileService.DeleteUser(userName!);
 
-            if (!success)
+            if (result.Failure)
             {
-                return this.NotFound(new CommonResponseModel { Message = userName + " doesn't exist" });
+                return this.NotFound(new CommonResponseModel { Message = result.Error });
             }
 
             return this.Ok(new CommonResponseModel { Message = userName + " Deleted!" });
