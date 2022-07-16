@@ -54,7 +54,7 @@
             }
 
             await this.profileService.Undelete(user);
-            return this.Ok(new CommonResponseModel { Message = "Account has been restored" });
+            return this.Ok(new CommonResponseModel { Message = "Account was restored" });
         }
     }
 }

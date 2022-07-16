@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/authServices/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DeactivateAccountComponent } from './deactivate-account-modal/deactivate-account.component';
 
 @Component({
   selector: 'app-profile',
@@ -9,16 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProfileComponent {
   public username: any;
-  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, private dialog: MatDialog) {
     this.username = this.authService.getUsername();
   }
 
-  deactivateUser() {
-    this.authService.deleteUser().subscribe((response) => {
-      console.log(response.body['message']);
-
-      this.snackBar.open(response.body['message'], '', { duration: 3000 });
-    });
-    this.authService.logout();
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DeactivateAccountComponent);
+    dialogRef;
   }
 }

@@ -28,5 +28,19 @@
             }
             return this.StatusCode((int)HttpStatusCode.Created);
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route(nameof(GetAllFiles))]
+        public async Task<AllFilesServiceModel> GetAllFiles()
+        {
+            var username = this.HttpContext.User.Identity!.Name;
+            var result = new AllFilesServiceModel();
+
+            var files = this.postService.GetAllFiles(username!);
+            files.ToList().ForEach(f => result.Files!.Add(f));
+
+            return result;
+        }
     }
 }

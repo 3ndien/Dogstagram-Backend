@@ -14,6 +14,9 @@ export class CreatePostService {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'multipart/form-data');
 
-    return this.http.post(this.creatPostPath, data, { headers });
+    return this.http.post(this.creatPostPath, data, {
+      headers,
+      observe: 'response',
+    });
   }
 }

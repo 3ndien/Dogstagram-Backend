@@ -6,8 +6,10 @@
   <mat-card-header>
     <button mat-fab class="profile-picture"></button>
   </mat-card-header>
+
   <mat-card-actions align="end">
-    <button mat-raised-button color="warn" (click)="deactivateUser()">Deactivate Account</button>
+    <button mat-raised-button color="primary">Edit Profile</button>
+    <button mat-raised-button color="warn" (click)="openDialog()">Deactivate Account</button>
   </mat-card-actions>
   <mat-divider></mat-divider>
 </mat-card>

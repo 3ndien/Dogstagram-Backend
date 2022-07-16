@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CreatePostService } from '../services/create-post.service';
 import { AuthService } from '../../core/authServices/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-post',
@@ -19,7 +20,8 @@ export class CreatePostComponent {
     private authService: AuthService,
     private postService: CreatePostService,
     public dialogRef: MatDialogRef<CreatePostComponent>,
-    private dom: DomSanitizer
+    private dom: DomSanitizer,
+    private snackbar: MatSnackBar
   ) {}
 
   onFileSelected(event: any) {
@@ -34,7 +36,14 @@ export class CreatePostComponent {
   }
 
   post() {
-    this.postService.post(this.formData).subscribe();
-    this.dialogRef.close();
+    this.postService.post(this.formData).subscribe((response) => {
+      console.log(response.status);
+      if (response.status === 201) {
+        this.dialogRef.close();
+        this.snackbar.open('Post is created', '', {
+          duration: 3000,
+        });
+      }
+    });
   }
 }

@@ -8,9 +8,15 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import { CreatePostService } from './services/create-post.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from '../core/interceptorServices/jwt-interceptor.service';
+import { DeactivateAccountComponent } from './profile/deactivate-account-modal/deactivate-account.component';
 
 @NgModule({
-  declarations: [NavbarComponent, ProfileComponent, CreatePostComponent],
+  declarations: [
+    NavbarComponent,
+    ProfileComponent,
+    CreatePostComponent,
+    DeactivateAccountComponent,
+  ],
   imports: [CommonModule, MaterialModule, FeaturesRoutingModule],
   providers: [
     CreatePostService,

@@ -27,7 +27,7 @@ export class LoginComponent {
   login() {
     this.authService.login(this.loginForm.value).subscribe((data) => {
       console.log(data.body['message']);
-      if (data.body['message'] === 'Account has been restored') {
+      if (data.body['message'] === 'Account was restored') {
         this.snackBar.open(data.body['message'], '', {
           duration: 3000,
         });
