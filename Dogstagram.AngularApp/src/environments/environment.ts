@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://dogstagramwebapi.azurewebsites.net',
+  localHost: 'https://localhost:7238',
 };
 
 /*

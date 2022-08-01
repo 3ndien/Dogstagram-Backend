@@ -4,6 +4,7 @@
     using Dogstagram.WebApi.Features.Identity;
     using Dogstagram.WebApi.Features.Identity.Models;
     using Dogstagram.WebApi.Features.Profile.Models;
+    using Dogstagram.WebApi.Infrastructures.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,12 @@
             this.identityService = identityService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         [Route(nameof(Details))]
-        public async Task<ActionResult<ProfileDetailsServiceModel>> Details(string userId)
+        public async Task<ActionResult<ProfileDetailsServiceModel>> Details()
         {
+            var userId = this.User.GetId();
             return await this.profileService.ProfileDetails(userId);
         }
 

@@ -9,6 +9,8 @@ import { CreatePostService } from './services/create-post.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptorService } from '../core/interceptorServices/jwt-interceptor.service';
 import { DeactivateAccountComponent } from './profile/deactivate-account-modal/deactivate-account.component';
+import { ProfileService } from './services/profile.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { DeactivateAccountComponent } from './profile/deactivate-account-modal/d
   imports: [CommonModule, MaterialModule, FeaturesRoutingModule],
   providers: [
     CreatePostService,
+    ProfileService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptorService,

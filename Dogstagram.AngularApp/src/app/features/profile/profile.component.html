@@ -1,15 +1,49 @@
 <app-navbar></app-navbar>
-<mat-card>
-  <mat-card-header class="profil-title">
-      {{username}}
-  </mat-card-header>
-  <mat-card-header>
-    <button mat-fab class="profile-picture"></button>
-  </mat-card-header>
 
-  <mat-card-actions align="end">
-    <button mat-raised-button color="primary">Edit Profile</button>
-    <button mat-raised-button color="warn" (click)="openDialog()">Deactivate Account</button>
-  </mat-card-actions>
-  <mat-divider></mat-divider>
-</mat-card>
+<section>
+  <div class="card mb-3" style="max-height: 300px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <button mat-raised-button class="profile-picture">
+        </button>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 id="profile-title" class="card-title">
+            <span>
+              {{username}}
+            </span>
+            <span>
+              <button mat-raised-button color="primary">Edit Profile</button>
+              <button mat-raised-button color="warn" (click)="openDialog()">Deactivate Account</button>
+            </span>
+          </h5>
+          <p id="follow-p" class="card-text">
+            <span>
+              Followers {{profile.followerCount}}
+            </span>
+            <span>
+              Followers {{profile.followingCount}}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-container *ngIf="files === true">
+    Loading tabs...
+  </ng-container>
+
+  <mat-tab-group>
+    <mat-tab >
+      <ng-template mat-tab-label>{{files.label}}</ng-template>
+      <img *ngFor="let file of files.content" class="post-image" [src]="file" alt="">
+    </mat-tab>
+<mat-tab>
+  <ng-template mat-tab-label>Videos</ng-template>
+</mat-tab>
+  </mat-tab-group>
+
+

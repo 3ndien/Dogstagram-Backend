@@ -1,4 +1,9 @@
+section{
+
+}
+
 .profile-picture {
+  position: relative;
   width: 17rem;
   height: 17rem;
   border-radius: 50%;
@@ -7,10 +12,36 @@
   background-position: center center;
 }
 
-.profil-title {
-  position: relative;
-  left: 30%;
-  padding-top: 1rem;
+#profile-title {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   font-size: 3rem;
   font-family: cursive;
+}
+
+#follow-p {
+  left: 10rem;
+  font-size: 1.2rem;
+  font-family: cursive;
+}
+
+button {
+  margin: 0.5rem;
+}
+
+span{
+  margin: 0.8rem;
+}
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+.mat-tab-group, mat-tab{
+  align-items: center;
+}
+
+.post-image {
+  width: 15rem;
+  margin: 1rem;
 }

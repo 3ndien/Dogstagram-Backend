@@ -3,6 +3,7 @@ namespace Dogstagram.WebApi.Features.Post
 {
     using Azure.Storage.Blobs;
     using Azure.Storage.Blobs.Models;
+    using Azure.Storage.Sas;
     using Dogstagram.WebApi.Features.Post.Models;
     using Dogstagram.WebApi.Infrastructures.Services;
     using System.Collections.Generic;
@@ -17,17 +18,37 @@ namespace Dogstagram.WebApi.Features.Post
             this.blob = blob;
         }
 
-        public IEnumerable<BlobItem> GetAllFiles(string username)
+        public async Task<PostsServiceModel> GetAllFiles(string username)
         {
-            var containerClient = this.blob.GetBlobContainerClient($"{username}-container");
-            var files = containerClient.GetBlobs().ToList();
-            return files;
+            var posts = new PostsServiceModel();
+            posts.Label = "Posts";
+            var blobContainer = this.blob.GetBlobContainerClient($"{username}-container");
+
+            var blobNames = blobContainer.GetBlobs().Select(b => b.Name).ToList();
+
+            var sasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = blobContainer.Name,
+                Resource = "c",
+            };
+
+            sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddDays(1);
+            sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+
+            for (int i = 0; i < blobNames.Count; i++)
+            {
+                var sasUri = blobContainer.GetBlobClient(blobNames[i]).GenerateSasUri(sasBuilder);
+                posts.Content.Add(sasUri.AbsoluteUri);
+            }
+            return posts;
         }
 
-        public Result UploadFile(PostImageRequestModel model)
+        public async Task<Result> UploadFile(PostImageRequestModel model)
         {
             var containerClient = this.blob.GetBlobContainerClient(model.Username + "-container");
-            var response = containerClient.UploadBlob(model.Image!.FileName, model.Image.OpenReadStream());
+            var response = await containerClient
+                .GetBlobClient(model.Image!.FileName)
+                .UploadAsync(model.Image.OpenReadStream(), new BlobHttpHeaders { ContentType = model.Image.ContentType});
 
             if (response.GetRawResponse().IsError)
             {
