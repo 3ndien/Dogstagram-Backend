@@ -19,15 +19,15 @@
         [Authorize]
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<ActionResult> Create([FromForm] PostImageRequestModel model)
+        public async Task<ActionResult<UploadImageResponseModel>> Create([FromForm] PostImageRequestModel model)
         {
             var result = await this.postService.UploadFile(model);
-            
-            if (result.Failure)
+
+            if (result == null)
             {
                 return this.BadRequest();
             }
-            return this.StatusCode((int)HttpStatusCode.Created);
+            return this.StatusCode((int)HttpStatusCode.Created, result);
         }
 
         [Authorize]

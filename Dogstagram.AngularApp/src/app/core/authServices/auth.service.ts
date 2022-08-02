@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private loginPath = environment.localHost + '/identity/login';
-  private registerPath = environment.localHost + '/identity/register';
+  private loginPath = environment.apiUrl + '/identity/login';
+  private registerPath = environment.apiUrl + '/identity/register';
   private deletePath = environment.apiUrl + '/profile/delete';
 
   constructor(private http: HttpClient, private router: Router) {}

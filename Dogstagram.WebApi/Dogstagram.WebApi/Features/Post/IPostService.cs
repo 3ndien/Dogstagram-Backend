@@ -5,7 +5,7 @@
 
     public interface IPostService
     {
-        Task<Result> UploadFile(PostImageRequestModel model);
+        Task<UploadImageResponseModel> UploadFile(PostImageRequestModel model);
 
         Task<PostsServiceModel> GetAllFiles(string username);
     }

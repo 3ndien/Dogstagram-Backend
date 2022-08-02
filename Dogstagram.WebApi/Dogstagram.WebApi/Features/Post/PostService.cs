@@ -43,19 +43,31 @@ namespace Dogstagram.WebApi.Features.Post
             return posts;
         }
 
-        public async Task<Result> UploadFile(PostImageRequestModel model)
+        public async Task<UploadImageResponseModel> UploadFile(PostImageRequestModel model)
         {
             var containerClient = this.blob.GetBlobContainerClient(model.Username + "-container");
             var response = await containerClient
                 .GetBlobClient(model.Image!.FileName)
-                .UploadAsync(model.Image.OpenReadStream(), new BlobHttpHeaders { ContentType = model.Image.ContentType});
+                .UploadAsync(model.Image.OpenReadStream(), new BlobHttpHeaders { ContentType = model.Image.ContentType });
 
             if (response.GetRawResponse().IsError)
             {
-                return false;
+                return null!;
             }
 
-            return true;
+            var sasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = containerClient.Name,
+                Resource = "c"
+            };
+
+            sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddDays(1);
+            sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+            var result = new UploadImageResponseModel
+            {
+                ImageUrl = containerClient.GetBlobClient(model.Image.FileName).GenerateSasUri(sasBuilder).AbsoluteUri
+            };
+            return result;
         }
     }
 }

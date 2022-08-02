@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ProfileService {
-  private getAllPath = environment.localHost + '/post/getallfiles';
-  private profileDetailsPath = environment.localHost + '/profile/details';
+  private getAllPath = environment.apiUrl + '/post/getallfiles';
+  private profileDetailsPath = environment.apiUrl + '/profile/details';
 
   constructor(private http: HttpClient) {}
 
