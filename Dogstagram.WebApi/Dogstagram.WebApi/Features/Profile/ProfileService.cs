@@ -41,6 +41,7 @@
             var user = await this.dbContext.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
             var model = new ProfileDetailsServiceModel
             {
+                Username = user.UserName,
                 ShortName = user?.Profile?.ShortName,
                 FollowerCount = await this.followService.FollowerCount(userId),
                 FollowingCount = await this.followService.FollowingCount(userId),

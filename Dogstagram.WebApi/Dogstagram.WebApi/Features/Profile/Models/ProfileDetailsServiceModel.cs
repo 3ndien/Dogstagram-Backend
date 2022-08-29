@@ -7,6 +7,8 @@
             this.Posts = new HashSet<Data.Models.Post>();
         }
 
+        public string Username { get; set; }
+
         public int FollowerCount { get; set; }
 
         public int FollowingCount { get; set; }
