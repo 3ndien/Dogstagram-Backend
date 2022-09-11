@@ -79,6 +79,7 @@
             var responseModel = new LoginResponseModel
             {
                 Roles = roles,
+                ImageUrl = user?.Profile?.PhotoUrl,
                 Token = this.identityService
                 .GenerateJwtToken(user.Id, user.UserName, roles, this.applicationSettings.Secret!)
             };

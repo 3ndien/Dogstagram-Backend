@@ -3,10 +3,13 @@
     using Azure.Storage.Blobs;
     using Dogstagram.WebApi.Data;
     using Dogstagram.WebApi.Data.Models;
+    using Dogstagram.WebApi.Features;
     using Dogstagram.WebApi.Features.Follow;
     using Dogstagram.WebApi.Features.Identity;
     using Dogstagram.WebApi.Features.Post;
+    using Dogstagram.WebApi.Features.Post.Models;
     using Dogstagram.WebApi.Features.Profile;
+    using Dogstagram.WebApi.Features.Profile.Models;
     using Dogstagram.WebApi.Features.Search;
     using Dogstagram.WebApi.Infrastructures.Filters;
     using Microsoft.AspNetCore.Authentication.JwtBearer;

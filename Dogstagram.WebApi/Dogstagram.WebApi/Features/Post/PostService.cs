@@ -5,8 +5,6 @@ namespace Dogstagram.WebApi.Features.Post
     using Azure.Storage.Blobs.Models;
     using Azure.Storage.Sas;
     using Dogstagram.WebApi.Features.Post.Models;
-    using Dogstagram.WebApi.Infrastructures.Services;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class PostService : IPostService
@@ -66,7 +64,7 @@ namespace Dogstagram.WebApi.Features.Post
             var result = new UploadImageResponseModel
             {
                 ImageUrl = containerClient.GetBlobClient(model.Image.FileName).GenerateSasUri(sasBuilder).AbsoluteUri
-            };
+            }; 
             return result;
         }
     }

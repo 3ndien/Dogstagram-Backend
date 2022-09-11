@@ -3,10 +3,12 @@
     using Dogstagram.WebApi.Controllers;
     using Dogstagram.WebApi.Features.Identity;
     using Dogstagram.WebApi.Features.Identity.Models;
+    using Dogstagram.WebApi.Features.Post.Models;
     using Dogstagram.WebApi.Features.Profile.Models;
     using Dogstagram.WebApi.Infrastructures.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     public class ProfileController : ApiController
     {
@@ -58,5 +60,11 @@
             await this.profileService.Undelete(user);
             return this.Ok(new CommonResponseModel { Message = "Account was restored" });
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route(nameof(UpdatePorofilePicture))]
+        public async Task<ActionResult<string>> UpdatePorofilePicture([FromForm] PostImageRequestModel model)
+             => await this.profileService.AddProfilePictureUrl(model);
     }
 }
