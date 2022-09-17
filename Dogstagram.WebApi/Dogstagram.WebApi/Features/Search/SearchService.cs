@@ -16,12 +16,12 @@
         public async Task<IEnumerable<SearchProfileServiceModel>> Profiles(string query)
             => await this.dbContext
             .Users
-            .Where(u => u.UserName == query || u.Profile!.ShortName == query)
+            .Where(u => u.UserName == query || u.ShortName == query)
             .Select(u => new SearchProfileServiceModel
             {
                 Id = u.Id,
                 Username = u.UserName,
-                PhotoUrl = u.Profile!.PhotoUrl
+                PhotoUrl = u.ProfilePictureUrl,
             })
             .ToListAsync();
     }

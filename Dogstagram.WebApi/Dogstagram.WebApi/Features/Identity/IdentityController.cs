@@ -46,7 +46,7 @@
 
             if (result.Succeeded)
             {
-                await blob.CreateBlobContainerAsync($"{user.UserName}-container");
+                await blob.CreateBlobContainerAsync($"{user.Id}-container");
                 return this.StatusCode((int)HttpStatusCode.Created);
             }
 
@@ -78,8 +78,9 @@
             }
             var responseModel = new LoginResponseModel
             {
+                Username= user.UserName,
                 Roles = roles,
-                ImageUrl = user?.Profile?.PhotoUrl,
+                ImageUrl = user.ProfilePictureUrl,
                 Token = this.identityService
                 .GenerateJwtToken(user.Id, user.UserName, roles, this.applicationSettings.Secret!)
             };

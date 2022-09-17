@@ -1,16 +1,18 @@
 ﻿namespace Dogstagram.WebApi.Features.Profile
 {
+    using AutoMapper;
     using Azure.Storage.Blobs;
     using Azure.Storage.Blobs.Models;
     using Azure.Storage.Sas;
+
     using Dogstagram.WebApi.Data;
     using Dogstagram.WebApi.Data.Models;
     using Dogstagram.WebApi.Data.Models.Base;
     using Dogstagram.WebApi.Features.Follow;
-    using Dogstagram.WebApi.Features.Post;
     using Dogstagram.WebApi.Features.Post.Models;
     using Dogstagram.WebApi.Features.Profile.Models;
     using Dogstagram.WebApi.Infrastructures.Services;
+    
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
@@ -20,17 +22,20 @@
         private readonly DogstagramDbContext dbContext;
         private readonly IFollowService followService;
         private readonly BlobServiceClient blob;
+        private readonly IMapper mapper;
 
         public ProfileService(
             UserManager<User> userManager,
             DogstagramDbContext dbContext,
             IFollowService followService,
-            BlobServiceClient blob)
+            BlobServiceClient blob,
+            IMapper mapper)
         {
             this.userManager = userManager;
             this.dbContext = dbContext;
             this.followService = followService;
             this.blob = blob;
+            this.mapper = mapper;
         }
 
         public async Task<Result> DeleteUser(string userName)
@@ -53,8 +58,8 @@
             var model = new ProfileDetailsServiceModel
             {
                 Username = user?.UserName!,
-                ShortName = user?.Profile?.ShortName,
-                PhotoUrl = user?.Profile?.PhotoUrl,
+                ShortName = user?.ShortName,
+                ProfilePictureUrl = user?.ProfilePictureUrl,
                 FollowerCount = await this.followService.FollowerCount(userId),
                 FollowingCount = await this.followService.FollowingCount(userId),
             };
@@ -71,10 +76,10 @@
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> AddProfilePictureUrl  (PostImageRequestModel model)
+        public async Task<string> AddProfilePictureUrl  (PostImageRequestModel model, string userId)
         {
-            var containerClient = this.blob.GetBlobContainerClient(model.Username + "-container");
-            var user = await this.dbContext.Users.FirstOrDefaultAsync(u => u.UserName == model.Username);
+            var containerClient = this.blob.GetBlobContainerClient(userId + "-container");
+            var user = await this.dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             string sasUri = string.Empty;
 
             var blobNames = containerClient.GetBlobs().Select(b => b.Name).ToList();
@@ -100,13 +105,18 @@
 
             sasUri = containerClient.GetBlobClient(model?.Image?.FileName).GenerateSasUri(sasBuilder).AbsoluteUri;
 
-            if (user!.Profile == null)
-            {
-                user.Profile = new UserProfile();
-            }
-            user!.Profile!.PhotoUrl = sasUri;
-            this.dbContext?.SaveChangesAsync();
+            user!.ProfilePictureUrl = sasUri;
+            await this.dbContext!.SaveChangesAsync();
             return sasUri;
+        }
+
+        public async Task<Result> UpdateProfileDetails(UpdateProfileDetailsRequestModel model, string userId)
+        {
+            var user = await this.dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            user.UserName = model.UserName == null ? user.UserName : user.UserName = model.UserName;
+            user.ShortName = model.ShortName == null ? user.ShortName : user.ShortName = model.ShortName;
+            await this.dbContext.SaveChangesAsync();
+            return "Updated!";
         }
     }
 }

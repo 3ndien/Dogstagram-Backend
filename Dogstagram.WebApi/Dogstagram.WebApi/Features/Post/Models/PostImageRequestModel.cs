@@ -4,8 +4,6 @@
 
     public class PostImageRequestModel
     {
-        public string? Username { get; set; }
-
         [Required]
         public IFormFile? Image { get; set; }
     }

@@ -48,9 +48,6 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>()
-                .OwnsOne(u => u.Profile);
-
             builder.Entity<Follow>()
                 .HasOne(f => f.User)
                 .WithMany()

@@ -5,7 +5,9 @@
 
     public class User : IdentityUser, IAuditInfo, IDeletableEntity
     {
-        public UserProfile? Profile { get; set; }
+        public string? ProfilePictureUrl { get; set; }
+
+        public string? ShortName { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

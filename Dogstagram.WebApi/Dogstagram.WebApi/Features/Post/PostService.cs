@@ -16,11 +16,11 @@ namespace Dogstagram.WebApi.Features.Post
             this.blob = blob;
         }
 
-        public async Task<PostsServiceModel> GetAllFiles(string username)
+        public async Task<PostsServiceModel> GetAllFiles(string userId)
         {
             var posts = new PostsServiceModel();
             posts.Label = "Posts";
-            var blobContainer = this.blob.GetBlobContainerClient($"{username}-container");
+            var blobContainer = this.blob.GetBlobContainerClient($"{userId}-container");
 
             var blobNames = blobContainer.GetBlobs().Select(b => b.Name).ToList();
 
@@ -41,9 +41,9 @@ namespace Dogstagram.WebApi.Features.Post
             return posts;
         }
 
-        public async Task<UploadImageResponseModel> UploadFile(PostImageRequestModel model)
+        public async Task<UploadImageResponseModel> UploadFile(PostImageRequestModel model, string userId)
         {
-            var containerClient = this.blob.GetBlobContainerClient(model.Username + "-container");
+            var containerClient = this.blob.GetBlobContainerClient(userId + "-container");
             var response = await containerClient
                 .GetBlobClient(model.Image!.FileName)
                 .UploadAsync(model.Image.OpenReadStream(), new BlobHttpHeaders { ContentType = model.Image.ContentType });

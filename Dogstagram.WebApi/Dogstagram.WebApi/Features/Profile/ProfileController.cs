@@ -65,6 +65,22 @@
         [Authorize]
         [Route(nameof(UpdatePorofilePicture))]
         public async Task<ActionResult<string>> UpdatePorofilePicture([FromForm] PostImageRequestModel model)
-             => await this.profileService.AddProfilePictureUrl(model);
+        {
+            var userId = this.HttpContext.User.GetId();
+            
+            return await this.profileService.AddProfilePictureUrl(model, userId);
+        }
+             
+
+        [HttpPost]
+        [Authorize]
+        [Route(nameof(UpdateProfileDetails))]
+        public async Task<ActionResult> UpdateProfileDetails(UpdateProfileDetailsRequestModel model)
+        {
+            var userId = this.HttpContext.User.GetId();
+            var result = await this.profileService.UpdateProfileDetails(model, userId);
+
+            return this.Ok(new CommonResponseModel { Message = "Updated!" });
+        }
     }
 }

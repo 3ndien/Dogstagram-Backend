@@ -2,6 +2,7 @@
 {
     using Dogstagram.WebApi.Controllers;
     using Dogstagram.WebApi.Features.Post.Models;
+    using Dogstagram.WebApi.Infrastructures.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -21,7 +22,8 @@
         [Route(nameof(Create))]
         public async Task<ActionResult<UploadImageResponseModel>> Create([FromForm] PostImageRequestModel model)
         {
-            var result = await this.postService.UploadFile(model);
+            var userId = this.HttpContext.User.GetId();
+            var result = await this.postService.UploadFile(model, userId);
 
             if (result == null)
             {
@@ -35,8 +37,8 @@
         [Route(nameof(GetAllFiles))]
         public async Task<ActionResult<PostsServiceModel>> GetAllFiles()
         {
-            var username = this.HttpContext.User.Identity?.Name;
-            var result = await this.postService.GetAllFiles(username!);
+            var userId = this.HttpContext.User.GetId();
+            var result = await this.postService.GetAllFiles(userId);
             return result;
         }
     }
